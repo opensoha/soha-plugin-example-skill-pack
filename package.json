@@ -1,0 +1,13 @@
+{
+  "name": "soha-plugin-example-skill-pack",
+  "version": "0.1.1",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": { "test": "node validate-manifest.mjs" },
+  "devDependencies": {
+    "@opensoha/contracts": "0.2.1",
+    "ajv": "8.20.0",
+    "ajv-formats": "3.0.1"
+  }
+}

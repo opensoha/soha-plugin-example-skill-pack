@@ -1,0 +1,20 @@
+import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
+import { readFile } from 'node:fs/promises';
+import { createRequire } from 'node:module';
+import Ajv2020 from 'ajv/dist/2020.js';
+import addFormats from 'ajv-formats';
+
+const require = createRequire(import.meta.url);
+const schema = (name) => require(`@opensoha/contracts/plugins/${name}.schema.json`);
+const validator = new Ajv2020({ allErrors: true, strict: false });
+addFormats(validator);
+validator.addSchema(schema('companion-pack'));
+const validate = validator.compile(schema('plugin-manifest'));
+const bytes = await readFile(new URL('./plugin.manifest.json', import.meta.url));
+const manifest = JSON.parse(bytes);
+assert.ok(validate(manifest), validator.errorsText(validate.errors));
+assert.equal(manifest.runtime.mode, 'manifest-only');
+assert.equal(manifest.type, 'skill-pack');
+assert.ok(manifest.extensionPoints.ai.skillPacks.length > 0);
+console.log(`${manifest.id}@${manifest.version} sha256:${createHash('sha256').update(bytes).digest('hex')}`);

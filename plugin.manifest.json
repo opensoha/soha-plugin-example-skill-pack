@@ -1,0 +1,14 @@
+{
+  "id": "opensoha.example-skill-pack",
+  "name": "Soha Example Skill Pack",
+  "version": "0.1.1",
+  "publisher": "OpenSoha",
+  "type": "skill-pack",
+  "description": "Demonstrates Soha repository installation and declarative extension registration.",
+  "runtime": { "mode": "manifest-only" },
+  "extensionPoints": {
+    "ai": {
+      "skillPacks": [{ "id": "example-skill-pack", "label": "Soha Example Skill Pack" }]
+    }
+  }
+}
